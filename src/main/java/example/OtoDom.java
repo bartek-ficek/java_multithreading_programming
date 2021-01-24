@@ -8,13 +8,19 @@ public class OtoDom {
 
     public static void main(String[] args) throws Exception {
 
-        URL oracle = new URL("http://www.oracle.com/");
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(oracle.openStream()));
+        URL myUrl = new URL("https://www.otodom.pl/sprzedaz/mieszkanie/krakow/");
+        try (BufferedReader in = new BufferedReader(
+                new InputStreamReader(myUrl.openStream()))) {
 
-        String inputLine;
-        while ((inputLine = in.readLine()) != null)
-            System.out.println(inputLine);
-        in.close();
+            String inputLine;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                stringBuilder.append(inputLine);
+                stringBuilder.append(System.lineSeparator());
+            }
+            System.out.println(stringBuilder);
+            in.close();
+//            stringBuilder.toString().substring()
+        }
     }
 }
