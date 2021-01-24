@@ -10,6 +10,8 @@ public class OtoDom {
 
     public static void main(String[] args) throws Exception {
 
+        //TODO to check with multiple Threads 59:20
+
         URL myUrl = new URL("https://www.otodom.pl/sprzedaz/mieszkanie/krakow/");
         try (BufferedReader in = new BufferedReader(
                 new InputStreamReader(myUrl.openStream()))) {
