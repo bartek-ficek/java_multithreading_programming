@@ -18,9 +18,14 @@ public class OtoDom {
                 stringBuilder.append(inputLine);
                 stringBuilder.append(System.lineSeparator());
             }
-            System.out.println(stringBuilder);
             in.close();
-//            stringBuilder.toString().substring()
+
+            String websiteContent = stringBuilder.toString();
+            int linkIndex = websiteContent.indexOf("https://www.otodom.pl/pl/oferta/");
+
+            String linkStart = websiteContent.substring(linkIndex);
+            String resultLink = (linkStart.split(".html"))[0];
+            System.out.println(resultLink);
         }
     }
 }
