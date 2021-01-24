@@ -7,7 +7,6 @@ public class ThreadExample {
 
     public static void main(String[] args) {
 
-
         /*
         ExecutorService - better method of creating Threads in bigger application.
         We can choose number of used Threads to execute task(s).
