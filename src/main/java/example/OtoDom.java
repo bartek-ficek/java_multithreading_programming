@@ -3,6 +3,8 @@ package example;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 public class OtoDom {
 
@@ -20,12 +22,20 @@ public class OtoDom {
             }
             in.close();
 
+            Set<String> setOfLinks = new HashSet<>();
             String websiteContent = stringBuilder.toString();
-            int linkIndex = websiteContent.indexOf("https://www.otodom.pl/pl/oferta/");
 
-            String linkStart = websiteContent.substring(linkIndex);
-            String resultLink = (linkStart.split(".html"))[0];
-            System.out.println(resultLink);
+            for (int i = 0; i < websiteContent.length(); i++) {
+                i = websiteContent.indexOf("https://www.otodom.pl/pl/oferta/",i);
+                if (i < 0) {
+                    break;
+                }
+                String resultLink = websiteContent.substring(i).split(".html")[0];
+                setOfLinks.add(resultLink);
+            }
+            System.out.println(setOfLinks);
+            System.out.println(setOfLinks.size());
+
         }
     }
 }
