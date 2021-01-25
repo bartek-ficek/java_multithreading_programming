@@ -14,7 +14,7 @@ public class OtoDom {
 
         long start = System.currentTimeMillis();
         String urlContent = saveUrlContent("https://www.otodom.pl/sprzedaz/mieszkanie/krakow/");
-        Set<String> setOfFlatOffers = saveUrlLinksToSet(urlContent, "Offer");
+        Set<String> setOfFlatOffers = saveUrlLinksToSet(urlContent);
         writeSetOfLinksToFiles(setOfFlatOffers);
         long end = System.currentTimeMillis();
         System.out.println("Sample time with one Thread: " + (end-start));
@@ -34,7 +34,7 @@ public class OtoDom {
         return stringBuilder.toString();
     }
 
-    public static Set<String> saveUrlLinksToSet(String urlContent, String filename) throws IOException {
+    public static Set<String> saveUrlLinksToSet(String urlContent) throws IOException {
 
         Set<String> setOfLinks = new HashSet<>();
         for (int i = 0; i < urlContent.length(); i++) {
