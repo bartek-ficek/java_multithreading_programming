@@ -9,39 +9,52 @@ public class OtoDom {
 
     public static void main(String[] args) throws Exception {
 
+        String urlContent = saveUrlContent("https://www.otodom.pl/sprzedaz/mieszkanie/krakow/");
+        Set<String> setOfFlatOffers = saveUrlLinksToSet(urlContent, "Offer");
+        writeSetOfLinksToFiles(setOfFlatOffers);
+    }
 
+    public static String saveUrlContent(String link) throws IOException {
+        URL myUrl = new URL(link);
+        StringBuilder stringBuilder = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(myUrl.openStream()))) {
 
-            Set<String> setOfLinks = new HashSet<>();
-            String websiteContent = stringBuilder.toString();
-
-            for (int i = 0; i < websiteContent.length(); i++) {
-                i = websiteContent.indexOf("https://www.otodom.pl/pl/oferta/",i);
-                if (i < 0) {
-                    break;
-                }
-                String resultLink = websiteContent.substring(i).split(".html")[0];
-                setOfLinks.add(resultLink);
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                stringBuilder.append(inputLine);
+                stringBuilder.append(System.lineSeparator());
             }
-            System.out.println(setOfLinks);
-            System.out.println(setOfLinks.size());
-
         }
+        return stringBuilder.toString();
+    }
 
-        public static void readWebsite(String link, String filename) throws IOException {
-            URL myUrl = new URL(link;
-            try (BufferedReader in = new BufferedReader(
-                    new InputStreamReader(myUrl.openStream()))) {
+    public static Set<String> saveUrlLinksToSet(String urlContent, String filename) throws IOException {
 
-                String inputLine;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    stringBuilder.append(inputLine);
-                    stringBuilder.append(System.lineSeparator());
-                }
-                in.close();
-
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename, false));
-                bufferedWriter.write(stringBuilder.toString());
+        Set<String> setOfLinks = new HashSet<>();
+        for (int i = 0; i < urlContent.length(); i++) {
+            i = urlContent.indexOf("https://www.otodom.pl/pl/oferta/", i);
+            if (i < 0) {
+                break;
             }
+            String resultLink = urlContent.substring(i).split(".html")[0];
+            setOfLinks.add(resultLink);
+        }
+        System.out.println(setOfLinks.size());
+        return setOfLinks;
+    }
+
+    public static void writeSetOfLinksToFiles(Set<String> setOfLinks) throws IOException {
+        int number = 1;
+        for (String link : setOfLinks) {
+            writeLinkToFile("Offer-" + number + ".html", link);
+            number++;
+        }
+    }
+
+
+    private static void writeLinkToFile(String filename, String link) throws IOException {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename, false))) {
+            bufferedWriter.write(link);
+        }
     }
 }
