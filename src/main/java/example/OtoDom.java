@@ -9,9 +9,15 @@ public class OtoDom {
 
     public static void main(String[] args) throws Exception {
 
+
+        //  Sample time with one Thread: 5823
+
+        long start = System.currentTimeMillis();
         String urlContent = saveUrlContent("https://www.otodom.pl/sprzedaz/mieszkanie/krakow/");
         Set<String> setOfFlatOffers = saveUrlLinksToSet(urlContent, "Offer");
         writeSetOfLinksToFiles(setOfFlatOffers);
+        long end = System.currentTimeMillis();
+        System.out.println("Sample time with one Thread: " + (end-start));
     }
 
     public static String saveUrlContent(String link) throws IOException {
@@ -50,7 +56,6 @@ public class OtoDom {
             number++;
         }
     }
-
 
     private static void writeLinkToFile(String filename, String link) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename, false))) {
